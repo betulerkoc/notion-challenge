@@ -13,16 +13,22 @@ function NoteDetail() {
   const [content, setContent] = useState("");
   const [notes, setAllNotes] = useState([]);
 
+  const [openUpdate, setOpenUpdate] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, [notes]);
+
   const addContent = (e) => {
     if (content !== "") {
       db.collection("pages")
         .doc(id)
         .update({
-          // content: notes ? [...notes, content] : [content],
           content: firebase.firestore.FieldValue.arrayUnion(content),
         })
         .then(() => {
           console.log("Data successfully written!");
+          setContent("");
         });
     }
   };
@@ -34,41 +40,68 @@ function NoteDetail() {
   };
 
   const deleteNote = (e) => {
-    let del = e.target.innerHTML;
-    console.log(del);
-    // db.collection("pages")
-    //   .doc(id)
-    //   .delete()
-    //   .then(() => {
-    //     console.log("Document successfully deleted!");
-    //   });
+    console.log(e);
     // var contentRef = db.collection("pages").doc(id);
-    setAllNotes(notes.filter(item => item !== del));
-    var removeNote = db.collection("pages").doc(id).update({
-      content: firebase.firestore.FieldValue.arrayRemove(del),
-    });
-    console.log(notes)
-    return removeNote;
+    // notes.filter(item => console.log(item));
+    for (let i = 0; i < notes.length; i++) {
+      if (i === e) {
+        console.log(notes[i]);
+        db.collection("pages")
+          .doc(id)
+          .update({
+            content: firebase.firestore.FieldValue.arrayRemove(notes[i]),
+          });
+      }
+    }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [content]);
+  const updateNote = (e) => {
+    setOpenUpdate(true);
+    console.log(e);
+    console.log(notes[e])
+  };
+
+  const handleSubmit = (e) => {
+    // if (content) {
+    //   setList(list.concat(content));
+    // }
+    // setValue("");
+    // event.preventDefault();
+  };
 
   return (
     <div>
       NoteDetail Page
       <Divider orientation="left">My Notes: </Divider>
-      <List
+      {notes.map(function (item, index) {
+        return (
+          <li key={index}>
+            {item} <span onClick={() => deleteNote(index)}>Delete</span>{" "}
+            <span onClick={() => updateNote(index)}>Update</span>
+          </li>
+        );
+      })}
+      {openUpdate && (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+          <button type="submit">Add Item</button>
+        </form>
+      )}
+      {/* <List
         size="large"
         bordered
         dataSource={notes}
         renderItem={(item) => (
           <List.Item onClick={deleteNote}>{item} </List.Item>
         )}
-      />
+      /> */}
       <Input
         placeholder="Add Note"
+        value={content}
         onChange={(e) => setContent(e.target.value)}
       />
       <Button icon={<PlusOutlined />} onClick={addContent} />
