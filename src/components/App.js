@@ -8,18 +8,22 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
+import Notes from "./Notes"
+import NoteDetail from "./NoteDetail"
 function App() {
   return (
   <AuthProvider>
-    <Card align="center">
+    <Card align="left">
     <Router>
           <AuthProvider>
             <Switch>
-              <PrivateRoute exact path="/" component={Dashboard} />
+              <PrivateRoute exact path="/" component={Notes} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path="/notes" component={Notes} />
+              <Route path="/:id" children={<NoteDetail/>}/>
             </Switch>
           </AuthProvider>
         </Router>
