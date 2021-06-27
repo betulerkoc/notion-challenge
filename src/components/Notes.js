@@ -19,6 +19,7 @@ function Note() {
       db.collection("notes").add({
         title: title,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        content: []
       });
       console.log("Data successfully written!");
       setTitle("");
