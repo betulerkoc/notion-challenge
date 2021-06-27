@@ -23,7 +23,7 @@ function App() {
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
               {/* <Route path="/notes" component={Notes} /> */}
-              <Route path="/:id" children={<NoteDetail/>}/>
+              <PrivateRoute path="/:id" children={<NoteDetail/>}/>
             </Switch>
           </AuthProvider>
         </Router>
