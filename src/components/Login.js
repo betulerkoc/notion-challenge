@@ -3,9 +3,12 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Alert, Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { GoogleOutlined,FacebookOutlined } from '@ant-design/icons';
 export default function Login() {
 
   const { login } = useAuth()
+  const {signInWithGoogle}=useAuth();
+  const {signInWithFacebook}=useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -14,7 +17,6 @@ export default function Login() {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
     try {
-      console.log("ağla")
       setError("");
       setLoading(true);
       login(values.email,values.password);
@@ -25,6 +27,26 @@ export default function Login() {
 
     setLoading(false);
   };
+  function google(){
+    try {
+      signInWithGoogle();
+      history.push("/");
+    
+    } catch(e) {
+      console.log("Failed to log in"+e);
+    }
+  }
+  function facebook(){
+    try {
+      signInWithFacebook();
+      history.push("/");
+    
+    } catch(e) {
+      console.log("Failed to log in"+e);
+    }
+  }
+  
+  
   
 
   return (
@@ -79,11 +101,23 @@ export default function Login() {
               className="login-form-button">
               Log in
             </Button>
+            
             Need an account? <Link to="/signup">Sign Up</Link>
           </Form.Item>
         </Form>
       </Card>
-     
+     <Button
+          icon={<GoogleOutlined />}
+          onClick={() => google()}
+        >
+          Sign In With Google
+        </Button>
+        <Button
+          icon={<FacebookOutlined />}
+          onClick={() => facebook()}
+        >
+          Sign In With Facebook
+        </Button>
     </>
   )
 }
