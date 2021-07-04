@@ -7,8 +7,6 @@ import { db } from "../firebaseConfig";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
 
-const { SubMenu } = Menu;
-
 function Note() {
   const [title, setTitle] = useState("");
   const [pageData, setPageData] = useState([]);
