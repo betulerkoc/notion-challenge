@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import { Menu } from "antd";
 import { Form, Button, Input } from "antd";
-import { SmileOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import db from "../firebaseConfig";
+import { PlusOutlined } from "@ant-design/icons";
+import { db } from "../firebaseConfig";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
 
@@ -15,11 +15,11 @@ function Note() {
 
   const addPage = (e) => {
     // e.preventDefault();
-    if(title !== "") {
+    if (title !== "") {
       db.collection("notes").add({
         title: title,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        content: []
+        content: [],
       });
       console.log("Data successfully written!");
       setTitle("");
@@ -49,9 +49,7 @@ function Note() {
       {console.log(pageData)}
       {pageData.map((m) => (
         <Link to={m.id}>
-          <Menu.Item key={m.id}>
-            {m.notes.title}
-          </Menu.Item>
+          <Menu.Item key={m.id}>{m.notes.title}</Menu.Item>
         </Link>
       ))}
 

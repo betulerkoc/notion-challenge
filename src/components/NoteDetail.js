@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { useParams } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Input, Form, Divider, Modal } from "antd";
-import db from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { Link } from "react-router-dom";
