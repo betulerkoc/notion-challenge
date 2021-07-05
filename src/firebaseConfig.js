@@ -1,6 +1,7 @@
-import firebase from "firebase/app"
+import * as firebase from "firebase";
 import "firebase/database";
 import "firebase/auth"
+
 const app = firebase.initializeApp({
     apiKey: "AIzaSyDg4HBGPNfLWjNDKfVL_uek2fiXsNaFhQk",
     authDomain: "notion-challenge.firebaseapp.com",
@@ -11,6 +12,7 @@ const app = firebase.initializeApp({
     measurementId: "G-RW8G98FYB6"
 });
 export const auth = app.auth()
+export const db = firebase.firestore();
 
 
 export default app
